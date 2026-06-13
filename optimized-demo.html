@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Оптимизированный пример рендеринга</title>
+  <meta name="description" content="Демонстрация клиентских оптимизаций: критический CSS, preload LCP-изображения, lazy loading и defer для JavaScript.">
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&q=75&auto=format&fit=crop" fetchpriority="high">
+  <style>
+    :root { color-scheme: light; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    body { margin: 0; color: #172033; background: #f7f8fb; }
+    header { padding: 48px 24px; background: linear-gradient(135deg, #14213d, #31572c); color: white; }
+    main { max-width: 960px; margin: -32px auto 48px; padding: 0 20px; }
+    .card { background: white; border-radius: 24px; box-shadow: 0 20px 50px rgb(23 32 51 / 12%); overflow: hidden; }
+    .hero { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: #d9e2ec; }
+    .content { padding: 28px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-top: 24px; }
+    .metric { padding: 18px; border: 1px solid #e6eaf0; border-radius: 16px; background: #fbfcff; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Оптимизация критического пути рендеринга</h1>
+    <p>Пример страницы после внедрения базовых улучшений производительности.</p>
+  </header>
+  <main>
+    <article class="card">
+      <img class="hero" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&q=75&auto=format&fit=crop" width="1200" height="675" alt="Рабочее место разработчика" fetchpriority="high" decoding="async">
+      <div class="content">
+        <h2>Что оптимизировано</h2>
+        <p>Критический CSS встроен в документ, LCP-изображение заранее предзагружается, размеры изображений указаны явно, а второстепенный JavaScript выполняется после построения DOM.</p>
+        <section class="grid" aria-label="Список оптимизаций">
+          <div class="metric"><strong>Preload</strong><br>Ускоряет получение главного изображения.</div>
+          <div class="metric"><strong>width/height</strong><br>Снижает риск CLS за счёт резервирования места.</div>
+          <div class="metric"><strong>defer</strong><br>Не блокирует HTML-парсинг второстепенным JS.</div>
+        </section>
+        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=70&auto=format&fit=crop" width="800" height="450" alt="Фрагмент кода" loading="lazy" decoding="async" style="width:100%;height:auto;margin-top:24px;border-radius:18px;">
+      </div>
+    </article>
+  </main>
+  <script defer>
+    document.documentElement.dataset.js = 'ready';
+  </script>
+</body>
+</html>
